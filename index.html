@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mind-ar-image-aframe.prod.js"></script>
+    <style>
+      body { margin: 0; overflow: hidden; }
+      #overlay { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(0,0,0,0.5); color: white; padding: 10px; border-radius: 10px; font-family: sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="overlay">Visez l'enveloppe de Georges</div>
+
+    <a-scene mindar-image="imageTargetSrc: https://drive.google.com/uc?export=download&id=1TCOhl4RM3dIa9AlklzzArLU_R0UYC4AN;" 
+             color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" 
+             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-video src="https://drive.google.com/uc?export=download&id=11d25rpRGOqsVdgDV3sF-4v_IGTyu2lKQ" 
+                 width="1" height="0.6" position="0 0 0" rotation="0 0 0"
+                 webkit-playsinline playsinline></a-video>
+      </a-entity>
+    </a-scene>
+    
+    <script>
+      // Pour forcer la lecture vidéo sur mobile
+      document.body.addEventListener('click', () => {
+        const video = document.querySelector('a-video');
+        if (video) video.components.material.material.map.image.play();
+      });
+    </script>
+  </body>
+</html>
