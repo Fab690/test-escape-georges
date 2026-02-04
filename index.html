@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mind-ar-image-aframe.prod.js"></script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mind-ar-image.prod.js"></script>
     <style>
-      #start-button { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10000; padding: 20px; font-size: 20px; background: #007bff; color: white; border: none; border-radius: 10px; cursor: pointer; }
+        body { margin: 0; }
+        canvas { width: 100vw; height: 100vh; display: block; }
+        #start-btn { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; z-index: 10; font-size: 20px; }
     </style>
-  </head>
-  <body>
-    <button id="start-button">DÉMARRER LA CAMÉRA</button>
-
-    <a-scene id="ar-scene" style="display:none;" mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/examples/image-tracking/assets/card-example/card.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-video src="./video-georges.mp4" width="1" height="0.6" position="0 0 0"></a-video>
-      </a-entity>
-    </a-scene>
+</head>
+<body>
+    <button id="start-btn">ACTIVER LA CAMÉRA (TEST FINAL)</button>
 
     <script>
-      const button = document.getElementById('start-button');
-      const scene = document.getElementById('ar-scene');
+        const startBtn = document.querySelector("#start-btn");
+        startBtn.addEventListener('click', async () => {
+            startBtn.style.display = "none";
+            
+            const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+                container: document.body,
+                imageTargetSrc: "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/examples/image-tracking/assets/card-example/card.mind"
+            });
 
-      button.addEventListener('click', () => {
-        button.style.display = 'none'; // Cache le bouton
-        scene.style.display = 'block'; // Affiche la scène
-        // Le clic utilisateur débloque la caméra et le son
-      });
+            try {
+                await mindarThree.start();
+                console.log("Caméra démarrée !");
+            } catch (err) {
+                alert("Erreur Caméra : " + err.message);
+                console.error(err);
+            }
+        });
     </script>
-  </body>
+</body>
 </html>
