@@ -4,21 +4,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mind-ar-image-aframe.prod.js"></script>
+    <style>
+      #start-button { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10000; padding: 20px; font-size: 20px; background: #007bff; color: white; border: none; border-radius: 10px; cursor: pointer; }
+    </style>
   </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/examples/image-tracking/assets/card-example/card.mind;" 
-             color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" 
-             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-      
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+  <body>
+    <button id="start-button">DÉMARRER LA CAMÉRA</button>
 
+    <a-scene id="ar-scene" style="display:none;" mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/examples/image-tracking/assets/card-example/card.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
       <a-entity mindar-image-target="targetIndex: 0">
         <a-video src="./video-georges.mp4" width="1" height="0.6" position="0 0 0"></a-video>
       </a-entity>
     </a-scene>
 
-    <div style="position: fixed; top: 10px; width: 100%; text-align: center; z-index: 999; color: white; background: rgba(0,0,0,0.5);">
-      TEST : Visez cette image -> https://bit.ly/3uN9pYf
-    </div>
+    <script>
+      const button = document.getElementById('start-button');
+      const scene = document.getElementById('ar-scene');
+
+      button.addEventListener('click', () => {
+        button.style.display = 'none'; // Cache le bouton
+        scene.style.display = 'block'; // Affiche la scène
+        // Le clic utilisateur débloque la caméra et le son
+      });
+    </script>
   </body>
 </html>
