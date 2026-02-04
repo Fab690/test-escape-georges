@@ -5,18 +5,30 @@
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mind-ar-image-aframe.prod.js"></script>
   </head>
-  <body>
-    <a-scene mindar-image="imageTargetSrc: ./targets.mind.jpg;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+  <body style="margin: 0; overflow: hidden;">
+    <a-scene mindar-image="imageTargetSrc: ./targets.mind.jpg;" 
+             color-space="sRGB" 
+             renderer="colorManagement: true, physicallyCorrectLights" 
+             vr-mode-ui="enabled: false" 
+             device-orientation-permission-ui="enabled: false">
       
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-video src="./georges.mp4" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+        <a-video src="./georges.mp4" width="1" height="0.6" position="0 0 0"></a-video>
       </a-entity>
     </a-scene>
 
-    <div style="position: fixed; top: 10px; width:100%; text-align: center; z-index: 9999;">
-        <button onclick="location.reload()" style="padding: 10px;">Actualiser si écran blanc</button>
+    <div style="position: fixed; top: 10px; width: 100%; text-align: center; z-index: 999; color: white; font-family: sans-serif; background: rgba(0,0,0,0.5);">
+      Visez l'enveloppe - Touchez l'écran pour le son
     </div>
+
+    <script>
+      // Force la lecture au premier clic (obligatoire sur smartphone)
+      window.addEventListener('click', () => {
+        const video = document.querySelector('video');
+        if (video) video.play();
+      });
+    </script>
   </body>
 </html>
